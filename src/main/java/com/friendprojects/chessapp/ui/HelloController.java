@@ -1,4 +1,4 @@
-package com.friendprojects.chessapp;
+package com.friendprojects.chessapp.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
