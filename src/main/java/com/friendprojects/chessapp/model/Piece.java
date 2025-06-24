@@ -18,7 +18,7 @@ public class Piece {
         this.position = position;
     }
 
-    public Position getPosition() {
+    protected Position getPosition() {
         return this.position;
     }
 
@@ -34,7 +34,7 @@ public class Piece {
         return this.colour;
     }
 
-    public void setPosition() {
+    public void setPosition(Position position) {
         this.position = position;
     }
 }
