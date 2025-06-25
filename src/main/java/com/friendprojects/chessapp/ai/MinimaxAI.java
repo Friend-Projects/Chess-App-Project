@@ -1,4 +1,12 @@
 package com.friendprojects.chessapp.ai;
 
-public class MinimaxAI {
+import com.friendprojects.chessapp.enums.Colour;
+import com.friendprojects.chessapp.model.Board;
+import com.friendprojects.chessapp.model.Move;
+
+public class MinimaxAI implements AIStrategy {
+    @Override
+    public Move chooseMove(Board board, Colour colour) {
+        return null;
+    }
 }

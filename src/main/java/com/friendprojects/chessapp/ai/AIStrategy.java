@@ -4,9 +4,6 @@ import com.friendprojects.chessapp.enums.Colour;
 import com.friendprojects.chessapp.model.Board;
 import com.friendprojects.chessapp.model.Move;
 
-public class EvalAI implements AIStrategy {
-    @Override
-    public Move chooseMove(Board board, Colour colour) {
-        return null;
-    }
+public interface AIStrategy {
+    Move chooseMove(Board board, Colour colour);
 }
