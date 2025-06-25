@@ -1,5 +1,7 @@
 package com.friendprojects.chessapp.model;
 
+import com.friendprojects.chessapp.enums.PieceType;
+
 public class Move {
     private final Piece piece;
     private final Position origin;

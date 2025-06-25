@@ -1,5 +1,8 @@
 package com.friendprojects.chessapp.model;
 
+import com.friendprojects.chessapp.enums.Colour;
+import com.friendprojects.chessapp.enums.PieceType;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

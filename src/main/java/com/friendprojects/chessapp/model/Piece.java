@@ -1,5 +1,8 @@
 package com.friendprojects.chessapp.model;
 
+import com.friendprojects.chessapp.enums.Colour;
+import com.friendprojects.chessapp.enums.PieceType;
+
 public class Piece {
 
     private final PieceType pieceType;

@@ -1,4 +1,4 @@
-package com.friendprojects.chessapp.model;
+package com.friendprojects.chessapp.enums;
 
 public enum PieceType {
     PAWN(1),
