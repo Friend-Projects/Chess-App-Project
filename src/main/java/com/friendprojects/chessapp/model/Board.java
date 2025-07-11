@@ -63,4 +63,8 @@ public class Board {
     public void removePieceAt(Position position) {
         this.chessBoard.remove(position);
     }
+
+    public boolean isOccupied(Position position) {
+        return this.chessBoard.containsKey(position);
+    }
 }

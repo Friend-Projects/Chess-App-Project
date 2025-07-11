@@ -21,7 +21,7 @@ public class Piece {
         this.position = position;
     }
 
-    protected Position getPosition() {
+    public Position getPosition() {
         return this.position;
     }
 

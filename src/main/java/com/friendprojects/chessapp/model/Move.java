@@ -41,7 +41,11 @@ public class Move {
     public String toAlgebraic() {
         if (this.piece.getType() == PieceType.KNIGHT) {
             return "N" + this.target.toAlgebraic();
-        } else {
+        }
+        else if (this.piece.getType() == PieceType.PAWN) {
+            return this.target.toAlgebraic();
+        }
+        else {
             return this.piece.getType().name().charAt(0) + this.target.toAlgebraic();
         }
     }
