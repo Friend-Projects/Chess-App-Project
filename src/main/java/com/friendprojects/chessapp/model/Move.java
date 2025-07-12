@@ -7,6 +7,7 @@ public class Move {
     private final Position origin;
     private final Position target;
     private final Piece capturedPiece; // Optional as null
+    // Use PieceType.QUEEN as placeholder if user input is not finalised to indicate a pawn promotion
     private final PieceType promotionType; // Optional as null
 
     public Move(Piece piece, Position origin, Position target, Piece capturedPiece, PieceType promotionType) {
@@ -35,6 +36,10 @@ public class Move {
 
     public PieceType getPromotionType() {
         return this.promotionType;
+    }
+
+    public boolean isPawnPromotion() {
+        return this.promotionType != null;
     }
 
     // TODO: Consider Captures, Disambiguating Moves, Promotion, Castling, Check

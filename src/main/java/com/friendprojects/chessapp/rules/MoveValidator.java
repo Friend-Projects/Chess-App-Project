@@ -1,6 +1,7 @@
 package com.friendprojects.chessapp.rules;
 
 import com.friendprojects.chessapp.enums.Colour;
+import com.friendprojects.chessapp.enums.PieceType;
 import com.friendprojects.chessapp.model.Board;
 import com.friendprojects.chessapp.model.Move;
 import com.friendprojects.chessapp.model.Piece;
@@ -37,7 +38,12 @@ public class MoveValidator {
         // Standard Forward Move
         Position forward = origin.offset(0, yOffset);
         if (forward != null && !board.isOccupied(forward)) {
-            moves.add(new Move(piece, origin, forward, null, null));
+
+            if (forward.getRow() == 7 || forward.getRow() == 0) {
+                moves.add(new Move(piece, origin, forward, null, PieceType.QUEEN));
+            } else {
+                moves.add(new Move(piece, origin, forward, null, null));
+            }
 
             // Standard First Move Double Forward
             boolean isFirstMove = (piece.getColour() == Colour.WHITE && origin.getCol() == 1) || (piece.getColour() == Colour.BLACK && piece.getPosition().getCol() == 6);
@@ -48,11 +54,28 @@ public class MoveValidator {
         }
 
         // Captures
+        int xOffset[] = new int[]{-1, 1};
+        for (int offset : xOffset) {
+            Position diagonalCapture = origin.offset(yOffset, offset);
+            if (diagonalCapture != null && board.isOccupiedByColour(diagonalCapture, piece.getColour())) {
+                if (diagonalCapture.getRow() == 7 || diagonalCapture.getRow() == 0) {
+                    moves.add(new Move(piece, origin, diagonalCapture, board.getPieceAt(diagonalCapture), PieceType.QUEEN));
+                } else {
+                    moves.add(new Move(piece, origin, diagonalCapture, board.getPieceAt(diagonalCapture), null));
+                }
+            }
+        }
 
         // En Passant
-
-        // Promotion
-
+        Piece enPassantCapture = board.getEnPassantCapture();
+        if (enPassantCapture != null && enPassantCapture.getColour() != piece.getColour()) {
+            Position capturePos = enPassantCapture.getPosition();
+            int colDiff = Math.abs(capturePos.getCol() - origin.getCol());
+            if (capturePos.getRow() == origin.getRow() && colDiff == 1) {
+                Position enPassantDiagonal = capturePos.offset(capturePos.getCol(), origin.getRow() + yOffset);
+                moves.add(new Move(piece, origin, enPassantDiagonal, enPassantCapture, null));
+            }
+        }
         return moves;
     }
 
