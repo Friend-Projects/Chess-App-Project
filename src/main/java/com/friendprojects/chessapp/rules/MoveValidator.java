@@ -18,9 +18,9 @@ public class MoveValidator {
         switch (piece.getType()) {
             case PAWN -> validMoves.addAll(getValidPawnMoves(piece, board));
             case KNIGHT -> validMoves.addAll(getValidKnightMoves(piece, board));
-            case BISHOP -> validMoves.addAll(getValidDirectionalMoves(piece, board));
-            case ROOK -> validMoves.addAll(getValidDirectionalMoves(piece, board));
-            case QUEEN -> validMoves.addAll(getValidDirectionalMoves(piece, board));
+            case BISHOP -> validMoves.addAll(getValidDirectionalMoves(piece, board, new int[][]{{1, 1}, {1, -1}, {-1, 1}, {-1, -1}}));
+            case ROOK -> validMoves.addAll(getValidDirectionalMoves(piece, board, new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}));
+            case QUEEN -> validMoves.addAll(getValidDirectionalMoves(piece, board, new int[][]{{1, 1}, {1, -1}, {-1, 1}, {-1, -1}, {1, 0}, {-1, 0}, {0, 1}, {0, -1}}));
             case KING -> validMoves.addAll(getValidKingMoves(piece, board));
         }
         return validMoves;
@@ -54,7 +54,7 @@ public class MoveValidator {
         }
 
         // Captures
-        int xOffset[] = new int[]{-1, 1};
+        int[] xOffset = new int[]{-1, 1};
         for (int offset : xOffset) {
             Position diagonalCapture = origin.offset(yOffset, offset);
             if (diagonalCapture != null && board.isOccupiedByColour(diagonalCapture, piece.getColour())) {
@@ -80,14 +80,24 @@ public class MoveValidator {
     }
 
     private List<Move> getValidKnightMoves(Piece piece, Board board) {
-        return null;
+        List<Move> moves = new ArrayList<>();
+        int[][] kOffset = new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
+        for (int[] offset : kOffset) {
+            Position jump = piece.getPosition().offset(offset[0], offset[1]);
+            if (jump != null && !board.isOccupiedByColour(jump, piece.getColour())) {
+                moves.add(new Move(piece, piece.getPosition(), jump, board.getPieceAt(jump), null));
+            }
+        }
+        return moves;
     }
 
-    private List<Move> getValidDirectionalMoves(Piece piece, Board board) {
-        return null;
+    private List<Move> getValidDirectionalMoves(Piece piece, Board board, int[][] dOffset) {
+        List<Move> moves = new ArrayList<>();
+        return moves;
     }
 
     private List<Move> getValidKingMoves(Piece piece, Board board) {
-        return null;
+        List<Move> moves = new ArrayList<>();
+        return moves;
     }
 }
