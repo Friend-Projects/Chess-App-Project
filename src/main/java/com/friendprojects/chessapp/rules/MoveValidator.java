@@ -32,8 +32,8 @@ public class MoveValidator {
 
     private List<Move> getValidPawnMoves(Piece piece, Board board) {
         List<Move> moves = new ArrayList<>();
-        int yOffset = piece.getColour() == Colour.WHITE ? 1 : -1;
         Position origin = piece.getPosition();
+        int yOffset = piece.getColour() == Colour.WHITE ? 1 : -1;
 
         // Standard Forward Move
         Position forward = origin.offset(0, yOffset);
@@ -81,11 +81,12 @@ public class MoveValidator {
 
     private List<Move> getValidKnightMoves(Piece piece, Board board) {
         List<Move> moves = new ArrayList<>();
+        Position origin = piece.getPosition();
         int[][] kOffset = new int[][]{{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
         for (int[] offset : kOffset) {
-            Position jump = piece.getPosition().offset(offset[0], offset[1]);
+            Position jump = origin.offset(offset[0], offset[1]);
             if (jump != null && !board.isOccupiedByColour(jump, piece.getColour())) {
-                moves.add(new Move(piece, piece.getPosition(), jump, board.getPieceAt(jump), null));
+                moves.add(new Move(piece, origin, jump, board.getPieceAt(jump), null));
             }
         }
         return moves;
@@ -93,6 +94,21 @@ public class MoveValidator {
 
     private List<Move> getValidDirectionalMoves(Piece piece, Board board, int[][] dOffset) {
         List<Move> moves = new ArrayList<>();
+        Position origin = piece.getPosition();
+        for (int[] offset : dOffset) {
+            Position current = origin.offset(offset[0], offset[1]);
+            while (current != null) {
+                if (board.isOccupied(current)) {
+                    Piece occupied = board.getPieceAt(current);
+                    if (occupied.getColour() != piece.getColour()) {
+                        moves.add(new Move(piece, origin, current, occupied, null));
+                    }
+                    break;
+                }
+                moves.add(new Move(piece, origin, current, null, null));
+                current = current.offset(offset[0], offset[1]);
+            }
+        }
         return moves;
     }
 
