@@ -40,16 +40,15 @@ public class MoveValidator {
         if (forward != null && !board.isOccupied(forward)) {
 
             if (forward.getRow() == 7 || forward.getRow() == 0) {
-                moves.add(new Move(piece, origin, forward, null, PieceType.QUEEN));
+                moves.add(new Move(piece, origin, forward, PieceType.QUEEN));
             } else {
-                moves.add(new Move(piece, origin, forward, null, null));
+                moves.add(new Move(piece, origin, forward));
             }
 
-            // Standard First Move Double Forward
-            boolean isFirstMove = (piece.getColour() == Colour.WHITE && origin.getCol() == 1) || (piece.getColour() == Colour.BLACK && piece.getPosition().getCol() == 6);
+            // First Move Double Forward
             Position doubleForward = origin.offset(0, 2 * yOffset);
-            if (doubleForward != null && !board.isOccupied(doubleForward) && isFirstMove) {
-                moves.add(new Move(piece, origin, doubleForward, null, null));
+            if (doubleForward != null && !board.isOccupied(doubleForward) && piece.isUnmoved()) {
+                moves.add(new Move(piece, origin, doubleForward));
             }
         }
 
@@ -61,7 +60,7 @@ public class MoveValidator {
                 if (diagonalCapture.getRow() == 7 || diagonalCapture.getRow() == 0) {
                     moves.add(new Move(piece, origin, diagonalCapture, board.getPieceAt(diagonalCapture), PieceType.QUEEN));
                 } else {
-                    moves.add(new Move(piece, origin, diagonalCapture, board.getPieceAt(diagonalCapture), null));
+                    moves.add(new Move(piece, origin, diagonalCapture, board.getPieceAt(diagonalCapture)));
                 }
             }
         }
@@ -73,7 +72,7 @@ public class MoveValidator {
             int colDiff = Math.abs(capturePos.getCol() - origin.getCol());
             if (capturePos.getRow() == origin.getRow() && colDiff == 1) {
                 Position enPassantDiagonal = capturePos.offset(capturePos.getCol(), origin.getRow() + yOffset);
-                moves.add(new Move(piece, origin, enPassantDiagonal, enPassantCapture, null));
+                moves.add(new Move(piece, origin, enPassantDiagonal, enPassantCapture));
             }
         }
         return moves;
@@ -86,7 +85,7 @@ public class MoveValidator {
         for (int[] offset : kOffset) {
             Position jump = origin.offset(offset[0], offset[1]);
             if (jump != null && !board.isOccupiedByColour(jump, piece.getColour())) {
-                moves.add(new Move(piece, origin, jump, board.getPieceAt(jump), null));
+                moves.add(new Move(piece, origin, jump, board.getPieceAt(jump)));
             }
         }
         return moves;
@@ -101,11 +100,11 @@ public class MoveValidator {
                 if (board.isOccupied(current)) {
                     Piece occupied = board.getPieceAt(current);
                     if (occupied.getColour() != piece.getColour()) {
-                        moves.add(new Move(piece, origin, current, occupied, null));
+                        moves.add(new Move(piece, origin, current, occupied));
                     }
                     break;
                 }
-                moves.add(new Move(piece, origin, current, null, null));
+                moves.add(new Move(piece, origin, current));
                 current = current.offset(offset[0], offset[1]);
             }
         }
@@ -114,6 +113,34 @@ public class MoveValidator {
 
     private List<Move> getValidKingMoves(Piece piece, Board board) {
         List<Move> moves = new ArrayList<>();
+        Position origin = piece.getPosition();
+        int[][] kingOffset = new int[][]{{1, 0}, {1, 1}, {1, -1}, {0, 1}, {0, -1}, {-1, 0}, {-1, 1}, {-1, -1}};
+        for (int[] offset : kingOffset) {
+            Position target = origin.offset(offset[0], offset[1]);
+            if (target != null && !board.isOccupiedByColour(target, piece.getColour())) {
+                moves.add(new Move(piece, origin, target, board.getPieceAt(target)));
+            }
+        }
+
+        // Castling
+        if (piece.isUnmoved()) {
+            int[] rooksOffset = new int[]{-4, 3};
+            Piece queenSideRook = board.getPieceAt(origin.offset(rooksOffset[0], 0));
+            if (queenSideRook.isUnmoved() && !board.isOccupied(origin.offset(-3, 0)) && !board.isOccupied(origin.offset(-2, 0)) && !board.isOccupied(origin.offset(-1, 0))) {
+                Position kingCastle = origin.offset(-2, 0);
+                Position rookCastle = origin.offset(-1, 0);
+                Move rookCastling = new Move(queenSideRook, queenSideRook.getPosition(), rookCastle);
+                moves.add(new Move(piece, origin, kingCastle, rookCastling));
+            }
+
+            Piece kingSideRook = board.getPieceAt(origin.offset(rooksOffset[1], 0));
+            if (kingSideRook.isUnmoved() && !board.isOccupied(origin.offset(1, 0)) && !board.isOccupied(origin.offset(2, 0))) {
+                Position kingCastle = origin.offset(2, 0);
+                Position rookCastle = origin.offset(1, 0);
+                Move rookCastling = new Move(kingSideRook, kingSideRook.getPosition(), rookCastle);
+                moves.add(new Move(piece, origin, kingCastle, rookCastling));
+            }
+        }
         return moves;
     }
 }

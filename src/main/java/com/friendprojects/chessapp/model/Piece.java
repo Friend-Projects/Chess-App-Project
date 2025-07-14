@@ -8,6 +8,7 @@ public class Piece {
     private final PieceType pieceType;
     private final Colour colour;
     private Position position;
+    private boolean isUnmoved = true;
 
     public Piece(PieceType pieceType, Colour colour) {
         this.pieceType = pieceType;
@@ -25,6 +26,10 @@ public class Piece {
         return this.position;
     }
 
+    public boolean isUnmoved() {
+        return this.isUnmoved;
+    }
+
     public PieceType getType() {
         return this.pieceType;
     }
@@ -39,5 +44,9 @@ public class Piece {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public void setToMoved() {
+        this.isUnmoved = false;
     }
 }
