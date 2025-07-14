@@ -10,6 +10,8 @@ import java.util.Map;
 public class Board {
     private final Map<Position, Piece> chessBoard;
 
+    private Piece enPassantCapture = null;
+
     public Board() {
         this.chessBoard = new HashMap<>();
     }
@@ -48,6 +50,14 @@ public class Board {
         addPieceAt(target, pieceToMove);
     }
 
+    public void setEnPassantCapture(Piece piece) {
+        this.enPassantCapture = piece;
+    }
+
+    public Piece getEnPassantCapture() {
+        return this.enPassantCapture;
+    }
+
     public Map<Position, Piece> getChessBoard() {
         return Collections.unmodifiableMap(this.chessBoard);
     }
@@ -62,5 +72,16 @@ public class Board {
 
     public void removePieceAt(Position position) {
         this.chessBoard.remove(position);
+    }
+
+    public boolean isOccupied(Position position) {
+        return this.chessBoard.containsKey(position);
+    }
+
+    public boolean isOccupiedByColour(Position position, Colour colour) {
+        if (isOccupied(position)) {
+            return getPieceAt(position).getColour() == colour;
+        }
+        return false;
     }
 }
