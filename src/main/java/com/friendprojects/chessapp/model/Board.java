@@ -11,6 +11,8 @@ public class Board {
     private final Map<Position, Piece> chessBoard;
 
     private Piece enPassantCapture = null;
+    private Piece whiteKing;
+    private Piece blackKing;
 
     public Board() {
         this.chessBoard = new HashMap<>();
@@ -22,13 +24,17 @@ public class Board {
         for (int col = 0; col < 8; col++) {
             Position whitePawnPos = new Position(col, 1);
             Position blackPawnPos = new Position(col, 6);
-            Position whiteBackPiece = new Position (col, 0);
-            Position blackBackPiece = new Position (col, 7);
-
             chessBoard.put(whitePawnPos, new Piece(PieceType.PAWN, Colour.WHITE, whitePawnPos));
             chessBoard.put(blackPawnPos, new Piece(PieceType.PAWN, Colour.BLACK, blackPawnPos));
-            chessBoard.put(whiteBackPiece, new Piece(backRankOrder[col], Colour.WHITE, whiteBackPiece));
-            chessBoard.put(blackBackPiece, new Piece(backRankOrder[col], Colour.WHITE, blackBackPiece));
+
+            Piece whitePiece = new Piece(backRankOrder[col], Colour.WHITE, new Position(col, 0));
+            Piece blackPiece = new Piece(backRankOrder[col], Colour.BLACK, new Position(col, 7));
+            chessBoard.put(whitePiece.getPosition(), whitePiece);
+            chessBoard.put(blackPiece.getPosition(), blackPiece);
+            if (backRankOrder[col] == PieceType.KING) {
+                whiteKing = whitePiece;
+                blackKing = blackPiece;
+            }
         }
     }
 
@@ -56,6 +62,10 @@ public class Board {
 
     public Piece getEnPassantCapture() {
         return this.enPassantCapture;
+    }
+
+    public Piece getKing(Colour colour) {
+        return colour == Colour.WHITE ? whiteKing : blackKing;
     }
 
     public Map<Position, Piece> getChessBoard() {
