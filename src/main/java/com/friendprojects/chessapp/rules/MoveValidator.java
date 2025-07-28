@@ -56,7 +56,7 @@ public class MoveValidator {
         int[] xOffset = new int[]{-1, 1};
         for (int offset : xOffset) {
             Position diagonalCapture = origin.offset(yOffset, offset);
-            if (diagonalCapture != null && board.isOccupiedByColour(diagonalCapture, piece.getColour())) {
+            if (diagonalCapture != null && board.isOccupiedByColour(diagonalCapture, piece.getColour().opposite())) {
                 if (diagonalCapture.getRow() == 7 || diagonalCapture.getRow() == 0) {
                     moves.add(new Move(piece, origin, diagonalCapture, board.getPieceAt(diagonalCapture), PieceType.QUEEN));
                 } else {
