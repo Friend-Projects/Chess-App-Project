@@ -22,6 +22,12 @@ public class Piece {
         this.position = position;
     }
 
+    public Piece(Piece copy) {
+        this.pieceType = copy.pieceType;
+        this.colour = copy.colour;
+        this.position = copy.position;
+    }
+
     public Position getPosition() {
         return this.position;
     }
