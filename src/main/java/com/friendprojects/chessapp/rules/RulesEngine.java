@@ -16,11 +16,10 @@ public class RulesEngine {
         this.moveValidator = moveValidator;
     }
 
-    public List<Move> getLegalMoves(Player player, Game game) {
+    public List<Move> getLegalMoves(Colour colour, Board board) {
         List<Move> legalMoves = new ArrayList<>();
-        Board board = game.getBoard();
         for (Map.Entry<Position, Piece> entry : board.getChessBoard().entrySet()) {
-            if (player.getColor() == entry.getValue().getColour()) {
+            if (colour == entry.getValue().getColour()) {
                 legalMoves.addAll(getLegalMovesForPiece(entry.getValue(), board));
             }
         }
