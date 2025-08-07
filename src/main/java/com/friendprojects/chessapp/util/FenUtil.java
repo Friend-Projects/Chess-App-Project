@@ -6,6 +6,9 @@ import com.friendprojects.chessapp.model.Game;
 import com.friendprojects.chessapp.model.Piece;
 import com.friendprojects.chessapp.model.Position;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class FenUtil {
 
     public static String generateFEN(Game game) {
@@ -56,7 +59,23 @@ public class FenUtil {
     }
 
     private static String getCastlingInfo(Board board) {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        List<Piece> kings = Arrays.asList(board.getKing(Colour.WHITE), board.getKing(Colour.BLACK));
+        int[] rooksOffset = new int[]{3, -4};
+
+        for (Piece king : kings) {
+            if (king != null && king.isUnmoved()) {
+                Piece kingSideRook = board.getPieceAt(king.getPosition().offset(rooksOffset[0], 0));
+                if (kingSideRook != null && kingSideRook.isUnmoved()) {
+                    sb.append(king.getColour() == Colour.WHITE ? 'K' : 'k');
+                }
+                Piece queenSideRook = board.getPieceAt(king.getPosition().offset(rooksOffset[1], 0));
+                if (queenSideRook != null && queenSideRook.isUnmoved()) {
+                    sb.append(king.getColour() == Colour.WHITE ? 'Q' : 'q');
+                }
+            }
+        }
+        return sb.toString();
     }
 
     private static String getEnpassantInfo(Board board) {
