@@ -49,17 +49,17 @@ public class Board {
         }
     }
 
-    public void applyMove(Move move) {
+    public void executeMove(Move move) {
         Position origin = move.getOrigin();
         Position target = move.getTarget();
         Piece pieceToMove = move.getPiece();
-
         Piece pieceAtOrigin = chessBoard.get(origin);
-        if (pieceToMove.getType() != pieceAtOrigin.getType()) {
-            throw new IllegalArgumentException("Piece " + pieceToMove.getType() + " instead of " + pieceAtOrigin.getType() + " found");
-        }
+
         if (!chessBoard.containsKey(origin)) {
             throw new IllegalArgumentException("No " + pieceToMove.getType() + " at position " + origin.toAlgebraic());
+        }
+        if (pieceToMove.getType() != pieceAtOrigin.getType()) {
+            throw new IllegalArgumentException("Piece " + pieceAtOrigin.getType() + " instead of " + pieceToMove.getType() + " found");
         }
 
         removePieceAt(origin);
