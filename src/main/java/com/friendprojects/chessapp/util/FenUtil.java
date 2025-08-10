@@ -75,18 +75,27 @@ public class FenUtil {
                 }
             }
         }
-        return sb.toString();
+        if (sb.isEmpty()) {
+            return "-";
+        } else {
+            return sb.toString();
+        }
     }
 
     private static String getEnpassantInfo(Board board) {
-        return null;
+        Piece enPassantCapture = board.getEnPassantCapture();
+        if (enPassantCapture == null) {
+            return "-";
+        } else {
+            return enPassantCapture.getPosition().offset(enPassantCapture.getColour() == Colour.WHITE ? -1 : 1, 0).toAlgebraic();
+        }
     }
 
     private static String getHalfMoveInfo(Game game) {
-        return null;
+        return Integer.toString(game.getHalfMoveClock());
     }
 
     private static String getFullMoveInfo(Game game) {
-        return null;
+        return Integer.toString(game.getFullMoveClock());
     }
 }

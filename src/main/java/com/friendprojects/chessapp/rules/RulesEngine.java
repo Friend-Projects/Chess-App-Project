@@ -31,7 +31,7 @@ public class RulesEngine {
         List<Move> validMoves = moveValidator.getValidMoves(piece, board);
         for (Move validMove : validMoves) {
             Board dummyBoard = new Board(board);
-            dummyBoard.applyMove(validMove);
+            dummyBoard.executeMove(validMove);
             if (isKingInCheck(piece.getColour(), dummyBoard)) {
                 pieceLegalMoves.add(validMove);
             }
