@@ -89,4 +89,18 @@ public class Move {
             return this.piece.getType().name().charAt(0) + this.target.toAlgebraic();
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append("Piece: ").append(this.piece).append("\t| ");
+        sb.append("Origin: ").append(this.origin).append("\t| ");
+        sb.append("Target: ").append(this.target).append("\t| ");
+        sb.append("Capture: ").append(this.capturedPiece).append("\t| ");
+        sb.append("Promotion: ").append(this.promotionType).append("\t| ");
+        sb.append("Accompanying Rook Castling Move: ").append(this.castlingRookMove).append("\t| ");
+        sb.append("]");
+        return sb.toString();
+    }
 }

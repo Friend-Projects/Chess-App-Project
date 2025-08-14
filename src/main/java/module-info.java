@@ -1,6 +1,7 @@
 module com.friendprojects.chessapp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.friendprojects.chessapp to javafx.fxml;

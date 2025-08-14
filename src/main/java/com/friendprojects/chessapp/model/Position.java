@@ -45,4 +45,15 @@ public class Position {
     public String toAlgebraic() {
         return (char) (this.col + 'a') + String.valueOf((this.row + 1));
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append("Col: ").append(this.col).append("\t| ");
+        sb.append("Row: ").append(this.row).append("\t| ");
+        sb.append("Square: ").append(toAlgebraic());
+        sb.append("]");
+        return sb.toString();
+    }
 }

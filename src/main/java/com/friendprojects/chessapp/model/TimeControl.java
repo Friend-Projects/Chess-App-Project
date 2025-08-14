@@ -5,8 +5,8 @@ public class TimeControl {
     private final int increment;
 
     public TimeControl(int duration, int increment) {
-        this.duration = duration;
-        this.increment = increment;
+        this.duration = duration; // Seconds
+        this.increment = increment; // Seconds
     }
 
     public int getDuration() {
@@ -15,5 +15,15 @@ public class TimeControl {
 
     public int getIncrement() {
         return this.increment;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append("Duration: ").append(this.duration).append("\t| ");
+        sb.append("Increment: ").append(this.increment);
+        sb.append("]");
+        return sb.toString();
     }
 }

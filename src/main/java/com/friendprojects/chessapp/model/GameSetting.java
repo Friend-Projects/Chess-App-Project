@@ -24,4 +24,15 @@ public class GameSetting {
     public AIDifficulty getAiDifficulty() {
         return this.aiDifficulty;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append("PvP Mode: ").append(this.isPvp).append("\t| ");
+        sb.append("Time Control: ").append(this.timeControl).append("\t| ");
+        sb.append("AI Difficulty: ").append(this.aiDifficulty);
+        sb.append("]");
+        return sb.toString();
+    }
 }

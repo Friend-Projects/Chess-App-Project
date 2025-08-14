@@ -55,4 +55,16 @@ public class Piece {
     public void setToMoved() {
         this.isUnmoved = false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append("Type: ").append(this.pieceType).append("\t| ");
+        sb.append("Colour: ").append(this.colour).append("\t| ");
+        sb.append("Position: ").append(this.position.toAlgebraic()).append("\t| ");
+        sb.append("Unmoved: ").append(this.isUnmoved);
+        sb.append("]");
+        return sb.toString();
+    }
 }

@@ -16,6 +16,7 @@ public class Board {
 
     public Board() {
         this.chessBoard = new HashMap<>();
+        setupBoard();
     }
 
     public Board(Board copy) {
@@ -112,5 +113,17 @@ public class Board {
             return getPieceAt(position).getColour() == colour;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append("En Passant Capture: ").append(this.enPassantCapture).append("\t| ");
+        sb.append("White King: ").append(this.whiteKing).append("\t| ");
+        sb.append("Black King: ").append(this.blackKing).append("\t| ");
+        sb.append("Chess Board: ").append(this.chessBoard);
+        sb.append("]");
+        return sb.toString();
     }
 }
