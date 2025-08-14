@@ -11,6 +11,12 @@ import java.util.List;
 
 public class FenUtil {
 
+    /**
+     * Generate the Forsyth-Edwards Notation of the board's current state in the game.
+     *
+     * @param game the game of the board to be converted
+     * @return the FEN {@code String} generated from the board's positions
+     */
     public static String generateFEN(Game game) {
         StringBuilder sb = new StringBuilder();
         Board board = game.getBoard();
@@ -44,6 +50,12 @@ public class FenUtil {
         return sb.toString();
     }
 
+    /**
+     * Convert chess piece types to their respective FEN character.
+     *
+     * @param piece the piece to be converted
+     * @return the FEN {@code String} of the piece
+     */
     private static char pieceToFENChar(Piece piece) {
         char fenChar;
         switch (piece.getType()) {
@@ -58,6 +70,13 @@ public class FenUtil {
         return piece.getColour() == Colour.WHITE ? Character.toUpperCase(fenChar) : fenChar;
     }
 
+    /**
+     * Get information on the ability of both players to castle king and queen side and displayed in FEN
+     * (FEN records the ability of each player to castle, not if castling is currently a legal move).
+     *
+     * @param board the board state being converted
+     * @return the FEN {@code String} of all castling rights
+     */
     private static String getCastlingInfo(Board board) {
         StringBuilder sb = new StringBuilder();
         List<Piece> kings = Arrays.asList(board.getKing(Colour.WHITE), board.getKing(Colour.BLACK));
@@ -82,6 +101,13 @@ public class FenUtil {
         }
     }
 
+    /**
+     * Get the information on whether En Passant is possible for any player on the board
+     * (FEN records the square behind the pawn in algebraic notation which performed a double forward last).
+     *
+     * @param board the board state being converted
+     * @return the FEN {@code String} of the en passant capture square
+     */
     private static String getEnpassantInfo(Board board) {
         Piece enPassantCapture = board.getEnPassantCapture();
         if (enPassantCapture == null) {
@@ -91,10 +117,22 @@ public class FenUtil {
         }
     }
 
+    /**
+     * Get the number of half moves (single player moved) since the last pawn move or capture.
+     *
+     * @param game the game containing the board state being converted
+     * @return the FEN {@code String} of the number of half moves
+     */
     private static String getHalfMoveInfo(Game game) {
         return Integer.toString(game.getHalfMoveClock());
     }
 
+    /**
+     * Get the number of full moves (both players moved) the current game has experienced.
+     *
+     * @param game the game containing the board state being converted
+     * @return the FEN {@code String} of the number of full moves
+     */
     private static String getFullMoveInfo(Game game) {
         return Integer.toString(game.getFullMoveClock());
     }

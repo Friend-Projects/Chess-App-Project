@@ -79,8 +79,14 @@ public class Game {
         this.gameState = gameState;
     }
 
+    /**
+     * Applies the given move (half-move) to the current state of the board and updates any game statistics.
+     *
+     * @param move the move being applied to the board
+     */
     public void applyMove(Move move) {
         this.board.executeMove(move);
+        appendToMoveHistory(move);
         if (move.getPiece().getType() == PieceType.PAWN || move.getCapturedPiece() != null) {
             this.halfMoveClock = 0;
         } else {

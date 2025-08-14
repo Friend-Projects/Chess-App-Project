@@ -12,8 +12,15 @@ import java.util.List;
 
 public class MoveValidator {
 
-    // Valid moves are chess piece moves that follow piece movement rules and accounts for obstructions but not king safety
+    /**
+     * Obtain all valid moves available for a chess piece on the given board.
+     *
+     * @param piece the piece being queried
+     * @param board the board that the piece is on
+     * @return the list of valid moves for the piece on the board
+     */
     public List<Move> getValidMoves(Piece piece, Board board) {
+        // Valid moves are chess piece moves that follow piece movement rules and accounts for obstructions but not king safety
         List<Move> validMoves = new ArrayList<>();
         switch (piece.getType()) {
             case PAWN -> validMoves.addAll(getValidPawnMoves(piece, board));
@@ -30,6 +37,13 @@ public class MoveValidator {
         return getValidMoves(piece, board).contains(move);
     }
 
+    /**
+     * Obtain all valid moves (forward, double forward, captures, and en passant) for a pawn type piece on the board.
+     *
+     * @param piece the pawn being queried
+     * @param board the board that the piece is on
+     * @return the list of valid moves for the pawn on the board
+     */
     private List<Move> getValidPawnMoves(Piece piece, Board board) {
         List<Move> moves = new ArrayList<>();
         Position origin = piece.getPosition();
@@ -78,6 +92,13 @@ public class MoveValidator {
         return moves;
     }
 
+    /**
+     * Obtain all valid moves for a knight type piece on the board.
+     *
+     * @param piece the knight being queried
+     * @param board the board that the piece is on
+     * @return the list of valid moves for the knight on the board
+     */
     private List<Move> getValidKnightMoves(Piece piece, Board board) {
         List<Move> moves = new ArrayList<>();
         Position origin = piece.getPosition();
@@ -91,6 +112,14 @@ public class MoveValidator {
         return moves;
     }
 
+    /**
+     * Obtain all valid moves for a directional type piece (bishop, rook, and queen) on the board.
+     *
+     * @param piece the piece being queried
+     * @param board the board that the piece is on
+     * @param dOffset the offset in the directions the piece move towards
+     * @return the list of valid moves for the piece on the board
+     */
     private List<Move> getValidDirectionalMoves(Piece piece, Board board, int[][] dOffset) {
         List<Move> moves = new ArrayList<>();
         Position origin = piece.getPosition();
@@ -111,6 +140,13 @@ public class MoveValidator {
         return moves;
     }
 
+    /**
+     * Obtain all valid moves (normal and castling) for a king type piece on the board.
+     *
+     * @param piece the king being queried
+     * @param board the board that the piece is on
+     * @return the list of valid moves for the king on the board
+     */
     private List<Move> getValidKingMoves(Piece piece, Board board) {
         List<Move> moves = new ArrayList<>();
         Position origin = piece.getPosition();

@@ -8,7 +8,7 @@ public class Piece {
     private final PieceType pieceType;
     private final Colour colour;
     private Position position;
-    private boolean isUnmoved = true;
+    private boolean isUnmoved = true; // Flag for if piece is in original location without moving
 
     public Piece(PieceType pieceType, Colour colour) {
         this.pieceType = pieceType;

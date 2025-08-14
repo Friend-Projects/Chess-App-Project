@@ -29,6 +29,9 @@ public class Board {
         this.blackKing = new Piece(copy.blackKing);
     }
 
+    /**
+     * Reset and create a blank chess board in the starting position.
+     */
     public void setupBoard() {
         this.chessBoard.clear();
         PieceType[] backRankOrder = {PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN, PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK};
@@ -49,6 +52,11 @@ public class Board {
         }
     }
 
+    /**
+     * Changes the current state of the board by applying the given move.
+     *
+     * @param move the chess move to be executed
+     */
     public void executeMove(Move move) {
         Position origin = move.getOrigin();
         Position target = move.getTarget();
