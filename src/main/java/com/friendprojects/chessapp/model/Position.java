@@ -9,6 +9,12 @@ public class Position {
         this.row = row;
     }
 
+    /**
+     * Converts the standard chess board coordinates to an {@code Position} instance.
+     *
+     * @param coords standard chess board coordinates
+     * @return a {@code Position} representation of the chess board coordinates
+     */
     public static Position toCoords(String coords) {
         int col = coords.toLowerCase().charAt(0) - 'a';
         int row = coords.charAt(1) - 1;
@@ -23,6 +29,13 @@ public class Position {
         return this.row;
     }
 
+    /**
+     * Create a new position offset by a coordinate from the original position.
+     *
+     * @param colOffset the file change differential
+     * @param rowOffset the rank change differential
+     * @return a new {@code Position} offset from the original
+     */
     public Position offset(int colOffset, int rowOffset) {
         int newCol = this.col + colOffset;
         int newRow = this.row + rowOffset;

@@ -73,6 +73,11 @@ public class Move {
     }
 
     // TODO: Consider Captures, Disambiguating Moves, Promotion, Castling, Check
+    /**
+     * Displays the human-readable notation of the chess move.
+     *
+     * @return the chess move in standard algebraic notation
+     */
     public String toAlgebraic() {
         if (this.piece.getType() == PieceType.KNIGHT) {
             return "N" + this.target.toAlgebraic();
