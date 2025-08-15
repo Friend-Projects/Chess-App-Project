@@ -27,7 +27,7 @@ public class Main extends Application {
         GameSetting gs = new GameSetting(false, tc, AIDifficulty.EASY);
         Board board = new Board();
         board.setupBoard();
-        System.out.println(pos);
+        System.out.println(pos.equals(pos2) + " ----- " + pos);
         System.out.println(piece);
         System.out.println(move);
         System.out.println(player);

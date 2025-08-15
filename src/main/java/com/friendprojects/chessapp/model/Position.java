@@ -5,6 +5,9 @@ public class Position {
     private final int row; // 0-7 (1 to 8)
 
     public Position(int col, int row) {
+        if (col < 0 || col > 7 || row < 0 || row > 7) {
+            throw new IllegalArgumentException("Position Class: [Column and row values out of bounds during creation]");
+        }
         this.col = col;
         this.row = row;
     }
@@ -17,7 +20,7 @@ public class Position {
      */
     public static Position toCoords(String coords) {
         int col = coords.toLowerCase().charAt(0) - 'a';
-        int row = coords.charAt(1) - 1;
+        int row = Character.getNumericValue(coords.charAt(1)) - 1;
         return new Position(col, row);
     }
 
@@ -55,5 +58,13 @@ public class Position {
         sb.append("Square: ").append(toAlgebraic());
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Position)) return false;
+        Position pos = (Position) object;
+        return this.col == pos.getCol() && this.row == pos.getRow();
     }
 }
