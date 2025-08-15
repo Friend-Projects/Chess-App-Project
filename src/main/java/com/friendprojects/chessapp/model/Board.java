@@ -16,7 +16,6 @@ public class Board {
 
     public Board() {
         this.chessBoard = new HashMap<>();
-        setupBoard();
     }
 
     public Board(Board copy) {

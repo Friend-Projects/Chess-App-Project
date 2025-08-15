@@ -26,6 +26,7 @@ public class Main extends Application {
         TimeControl tc = new TimeControl(180, 2);
         GameSetting gs = new GameSetting(false, tc, AIDifficulty.EASY);
         Board board = new Board();
+        board.setupBoard();
         System.out.println(pos);
         System.out.println(piece);
         System.out.println(move);
