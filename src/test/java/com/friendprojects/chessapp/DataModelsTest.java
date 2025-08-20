@@ -1,5 +1,9 @@
 package com.friendprojects.chessapp;
 
+import com.friendprojects.chessapp.enums.Colour;
+import com.friendprojects.chessapp.enums.PieceType;
+import com.friendprojects.chessapp.model.Move;
+import com.friendprojects.chessapp.model.Piece;
 import com.friendprojects.chessapp.model.Position;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -48,13 +52,8 @@ public class DataModelsTest {
         @Test
         public void testInvalidOffset() {
             Position one = new Position(4, 4);
-            assertEquals(null, one.offset(4, 4));
+            assertNull(one.offset(4, 4));
         }
-    }
-
-    @Nested
-    class PieceTest {
-
     }
 
     @Nested

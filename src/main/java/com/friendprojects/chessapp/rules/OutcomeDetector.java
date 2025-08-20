@@ -20,26 +20,22 @@ public class OutcomeDetector {
     /**
      * Chess game ends with player losing by being checkmated.
      *
-     * @param player the player checked for checkmate
-     * @param game the current chess match being played
+     * @param colour the side checked for checkmate
+     * @param board the current state of the board
      * @return {@code true} if game is lost by checkmate
      */
-    public boolean isCheckmate(Player player, Game game) {
-        Board board = game.getBoard();
-        Colour colour = player.getColor();
+    public boolean isCheckmate(Colour colour, Board board) {
         return rulesEngine.isKingInCheck(colour, board) && rulesEngine.getLegalMoves(colour, board).isEmpty();
     }
 
     /**
      * Chess game ends in draw as player is not in check but has no legal moves.
      *
-     * @param player the player checked for stalemate
-     * @param game the current chess match being played
+     * @param colour the side checked for checkmate
+     * @param board the current state of the board
      * @return {@code true} if game is drawn by stalemate
      */
-    public boolean isDrawByStalemate(Player player, Game game) {
-        Board board = game.getBoard();
-        Colour colour = player.getColor();
+    public boolean isDrawByStalemate(Colour colour, Board board) {
         return !rulesEngine.isKingInCheck(colour, board) && rulesEngine.getLegalMoves(colour, board).isEmpty();
     }
 

@@ -2,6 +2,8 @@ package com.friendprojects.chessapp.model;
 
 import com.friendprojects.chessapp.enums.PieceType;
 
+import java.util.Objects;
+
 public class Move {
     private final Piece piece;
     private final Position origin;
@@ -68,26 +70,12 @@ public class Move {
         return this.castlingRookMove;
     }
 
-    public boolean isCastling() {
-        return this.castlingRookMove != null;
+    public boolean isCapturing() {
+        return this.capturedPiece != null;
     }
 
-    // TODO: Consider Captures, Disambiguating Moves, Promotion, Castling, Check
-    /**
-     * Displays the human-readable notation of the chess move.
-     *
-     * @return the chess move in standard algebraic notation
-     */
-    public String toAlgebraic() {
-        if (this.piece.getType() == PieceType.KNIGHT) {
-            return "N" + this.target.toAlgebraic();
-        }
-        else if (this.piece.getType() == PieceType.PAWN) {
-            return this.target.toAlgebraic();
-        }
-        else {
-            return this.piece.getType().name().charAt(0) + this.target.toAlgebraic();
-        }
+    public boolean isCastling() {
+        return this.castlingRookMove != null;
     }
 
     @Override
@@ -102,5 +90,14 @@ public class Move {
         sb.append("Accompanying Rook Castling Move: ").append(this.castlingRookMove).append("\t| ");
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Move move)) return false;
+        return this.piece.equals(move.getPiece()) && this.origin.equals(move.getOrigin()) &&
+                this.target.equals(move.getTarget()) && Objects.equals(this.capturedPiece, move.getCapturedPiece()) &&
+                this.promotionType == move.getPromotionType() && Objects.equals(this.castlingRookMove, move.getCastlingRookMove());
     }
 }

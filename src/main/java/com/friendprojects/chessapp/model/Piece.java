@@ -67,4 +67,12 @@ public class Piece {
         sb.append("]");
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Piece piece)) return false;
+        return this.pieceType == piece.getType() && this.colour == piece.getColour() &&
+                this.position.equals(piece.getPosition()) && this.isUnmoved == piece.isUnmoved();
+    }
 }

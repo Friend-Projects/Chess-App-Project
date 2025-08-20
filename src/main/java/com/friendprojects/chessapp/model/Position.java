@@ -63,8 +63,7 @@ public class Position {
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (!(object instanceof Position)) return false;
-        Position pos = (Position) object;
+        if (!(object instanceof Position pos)) return false;
         return this.col == pos.getCol() && this.row == pos.getRow();
     }
 }
