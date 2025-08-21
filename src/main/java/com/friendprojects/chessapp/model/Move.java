@@ -14,6 +14,9 @@ public class Move {
     private final Move castlingRookMove; // Optional as null
 
     public Move(Piece piece, Position origin, Position target, Piece capturedPiece, PieceType promotionType, Move castlingRookMove) {
+        if (!piece.getPosition().equals(origin)) {
+            throw new IllegalArgumentException("Move Class: [Piece not found at origin position during creation]");
+        }
         this.piece = piece;
         this.origin = origin;
         this.target = target;

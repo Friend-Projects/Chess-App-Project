@@ -36,7 +36,7 @@ public class DataModelsTest {
         }
 
         @Test
-        public void testEqualityComparison() {
+        public void testEquality() {
             Position one = new Position(2, 3);
             Position two = new Position(2, 3);
             assertTrue(one.equals(two));
@@ -57,8 +57,43 @@ public class DataModelsTest {
     }
 
     @Nested
+    class PieceTest {
+
+        @Test
+        public void testEquality() {
+            Piece one = new Piece(PieceType.KNIGHT, Colour.BLACK, new Position(1, 2));
+            Piece two = new Piece(PieceType.KNIGHT, Colour.BLACK, new Position(1, 2));
+            assertTrue(one.equals(two));
+        }
+
+        @Test
+        public void testInequality() {
+            Piece one = new Piece(PieceType.QUEEN, Colour.WHITE, new Position(7, 7));
+            Piece two = new Piece(PieceType.BISHOP, Colour.BLACK, new Position(0, 0));
+            assertFalse(one.equals(two));
+        }
+    }
+
+    @Nested
     class MoveTest {
 
+        @Test
+        public void testEquality() {
+            Piece piece1 = new Piece(PieceType.PAWN, Colour.BLACK, new Position(1, 6));
+            Move move1 = new Move(piece1, new Position(1, 6), new Position(1, 7), PieceType.QUEEN);
+            Piece piece2 = new Piece(PieceType.PAWN, Colour.BLACK, new Position(1, 6));
+            Move move2 = new Move(piece2, new Position(1, 6), new Position(1, 7), PieceType.QUEEN);
+            assertTrue(move1.equals(move2));
+        }
+
+        @Test
+        public void testInequality() {
+            Piece piece1 = new Piece(PieceType.KNIGHT, Colour.WHITE, new Position(3, 4));
+            Move move1 = new Move(piece1, new Position(3, 4), new Position(2, 6));
+            Piece piece2 = new Piece(PieceType.KNIGHT, Colour.WHITE, new Position(3, 5));
+            Move move2 = new Move(piece2, new Position(3, 5), new Position(2, 7));
+            assertFalse(move1.equals(move2));
+        }
     }
 
     @Nested
