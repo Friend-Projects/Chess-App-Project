@@ -66,4 +66,12 @@ public class Position {
         if (!(object instanceof Position pos)) return false;
         return this.col == pos.getCol() && this.row == pos.getRow();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        hash = 31 * hash + this.col;
+        hash = 31 * hash + this.row;
+        return hash;
+    }
 }

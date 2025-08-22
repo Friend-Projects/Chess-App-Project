@@ -2,6 +2,7 @@ package com.friendprojects.chessapp;
 
 import com.friendprojects.chessapp.enums.Colour;
 import com.friendprojects.chessapp.enums.PieceType;
+import com.friendprojects.chessapp.model.Board;
 import com.friendprojects.chessapp.model.Move;
 import com.friendprojects.chessapp.model.Piece;
 import com.friendprojects.chessapp.model.Position;
@@ -97,18 +98,18 @@ public class DataModelsTest {
     }
 
     @Nested
-    class PlayerTest {
-
-    }
-
-    @Nested
-    class TimeControlTest {
-
-    }
-
-    @Nested
     class BoardTest {
 
+        @Test
+        public void testMoveExecution() {
+            Board board = new Board();
+            board.setupBoard();
+            Piece piece = board.getPieceAt(new Position(1, 1));
+            Move move = new Move(piece, new Position(1, 1), new Position(1, 3));
+            board.executeMove(move);
+            assertNull(board.getPieceAt(new Position(1, 1)));
+            assertEquals(piece, board.getPieceAt(new Position(1, 3)));
+        }
     }
 
     @Nested
