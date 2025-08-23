@@ -55,4 +55,24 @@ public class Piece {
     public void setToMoved() {
         this.isUnmoved = false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append("Type: ").append(this.pieceType).append("\t| ");
+        sb.append("Colour: ").append(this.colour).append("\t| ");
+        sb.append("Position: ").append(this.position.toAlgebraic()).append("\t| ");
+        sb.append("Unmoved: ").append(this.isUnmoved);
+        sb.append("]");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Piece piece)) return false;
+        return this.pieceType == piece.getType() && this.colour == piece.getColour() &&
+                this.position.equals(piece.getPosition()) && this.isUnmoved == piece.isUnmoved();
+    }
 }

@@ -17,4 +17,8 @@ public enum PieceType {
     public int getMaterialValue() {
         return materialValue;
     }
+
+    public String getSymbol() {
+        return this == PieceType.KNIGHT ? "N" : Character.toString(this.name().charAt(0));
+    }
 }

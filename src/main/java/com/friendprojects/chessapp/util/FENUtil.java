@@ -9,7 +9,7 @@ import com.friendprojects.chessapp.model.Position;
 import java.util.Arrays;
 import java.util.List;
 
-public class FenUtil {
+public class FENUtil {
 
     /**
      * Generate the Forsyth-Edwards Notation of the board's current state in the game.
@@ -18,6 +18,13 @@ public class FenUtil {
      * @return the FEN {@code String} generated from the board's positions
      */
     public static String generateFEN(Game game) {
+        StringBuilder sb = new StringBuilder(generatePartialFEN(game));
+        sb.append(' ').append(getHalfMoveInfo(game));
+        sb.append(' ').append(getFullMoveInfo(game));
+        return sb.toString();
+    }
+
+    public static String generatePartialFEN(Game game) {
         StringBuilder sb = new StringBuilder();
         Board board = game.getBoard();
 
@@ -45,8 +52,6 @@ public class FenUtil {
         sb.append(' ').append(game.getCurrentTurn().getColor() == Colour.WHITE ? 'w' : 'b');
         sb.append(' ').append(getCastlingInfo(board));
         sb.append(' ').append(getEnpassantInfo(board));
-        sb.append(' ').append(getHalfMoveInfo(game));
-        sb.append(' ').append(getFullMoveInfo(game));
         return sb.toString();
     }
 

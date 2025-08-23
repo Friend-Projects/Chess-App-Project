@@ -21,7 +21,6 @@ public class Board {
     public Board(Board copy) {
         this.chessBoard = new HashMap<>();
         for (Map.Entry<Position, Piece> entry : copy.chessBoard.entrySet()) {
-            Piece newPiece = new Piece(entry.getValue().getType(), entry.getValue().getColour(), entry.getValue().getPosition());
             this.chessBoard.put(entry.getKey(), new Piece(entry.getValue()));
         }
         this.enPassantCapture = copy.enPassantCapture == null ? null : new Piece(copy.enPassantCapture);
@@ -112,5 +111,17 @@ public class Board {
             return getPieceAt(position).getColour() == colour;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append("En Passant Capture: ").append(this.enPassantCapture).append("\t| ");
+        sb.append("White King: ").append(this.whiteKing).append("\t| ");
+        sb.append("Black King: ").append(this.blackKing).append("\t| ");
+        sb.append("Chess Board: ").append(this.chessBoard);
+        sb.append("]");
+        return sb.toString();
     }
 }

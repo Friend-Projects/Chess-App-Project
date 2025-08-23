@@ -3,15 +3,15 @@ package com.friendprojects.chessapp.model;
 import com.friendprojects.chessapp.enums.Colour;
 import com.friendprojects.chessapp.enums.GameState;
 import com.friendprojects.chessapp.enums.PieceType;
+import com.friendprojects.chessapp.util.FENUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Game {
     private final Board board;
     private final GameSetting gameSetting;
     private final List<Move> moveHistory;
+    private final Map<String, Integer> partialFENHistory;
 
     private final Player whitePlayer;
     private final Player blackPlayer;
@@ -25,6 +25,7 @@ public class Game {
         this.board = board;
         this.gameSetting = gameSetting;
         this.moveHistory = new ArrayList<>();
+        this.partialFENHistory = new HashMap<>();
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.currentTurn = whitePlayer;
@@ -45,6 +46,10 @@ public class Game {
 
     public List<Move> getMoveHistory() {
         return Collections.unmodifiableList(this.moveHistory);
+    }
+
+    public Map<String, Integer> getPartialFENHistory() {
+        return Collections.unmodifiableMap(this.partialFENHistory);
     }
 
     public Player getWhitePlayer() {
@@ -87,6 +92,8 @@ public class Game {
     public void applyMove(Move move) {
         this.board.executeMove(move);
         appendToMoveHistory(move);
+        this.partialFENHistory.merge(FENUtil.generatePartialFEN(this), 1, Integer::sum);
+
         if (move.getPiece().getType() == PieceType.PAWN || move.getCapturedPiece() != null) {
             this.halfMoveClock = 0;
         } else {
