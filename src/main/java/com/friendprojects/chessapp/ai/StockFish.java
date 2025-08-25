@@ -6,7 +6,7 @@ import com.friendprojects.chessapp.model.Move;
 
 public class StockFish implements AIStrategy {
     @Override
-    public Move chooseMove(Board board, Colour colour) {
+    public Move chooseMove(Colour colour, Board board) {
         return null;
     }
 }

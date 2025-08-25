@@ -14,6 +14,6 @@ public class AIPlayer extends Player {
 
     @Override
     public Move chooseMove(Board board, Game game) {
-        return aiStrategy.chooseMove(board, getColor());
+        return aiStrategy.chooseMove(getColor(), board);
     }
 }
