@@ -8,6 +8,10 @@ public class RandomProvider {
 
     private RandomProvider() {}
 
+    public static double getNextDouble() {
+        return RANDOM.nextDouble();
+    }
+
     public static <T> T select(List<T> list) {
         return list.get(RANDOM.nextInt(list.size()));
     }
