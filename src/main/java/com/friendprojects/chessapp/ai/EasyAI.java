@@ -13,8 +13,8 @@ import java.util.List;
 public class EasyAI implements AIStrategy {
     @Override
     public Move chooseMove(Colour colour, Board board) {
-        List<Move> legalMoves = Rules.RULES_ENGINE.getLegalMoves(colour, board);
-        List<Node<Move>> candidateMoves = legalMoves.stream().map(move -> new Node<Move>(move, computeMoveValue(move))).toList();
+        List<Move> legalMoves = Rules.RULES_ENGINE.getLegalMoves(colour, board).stream().filter(move -> move.getPiece().getColour() == colour).toList();
+        List<Node<Move>> candidateMoves = legalMoves.stream().map(move -> new Node<Move>(move, computeMaterialValue(move))).toList();
         double totalCost = 0.0;
         for (Node<Move> candidate : candidateMoves) {
             totalCost += candidate.getCost();
@@ -32,7 +32,7 @@ public class EasyAI implements AIStrategy {
         return Collections.max(candidateMoves, Comparator.comparingDouble(Node::getCost)).getItem();
     }
 
-    private double computeMoveValue(Move move) {
+    private double computeMaterialValue(Move move) {
         return move.isCapturing() ? move.getCapturedPiece().getMaterialValue() + 0.1 : 0.1;
     }
 }
