@@ -16,6 +16,7 @@ public class Evaluator {
     }
 
     public static int position(Board board) {
+        // Piece-Square Tables (Simplified Evaluation Function), King Safety, Mobility
         return 0;
     }
 
