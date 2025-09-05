@@ -1,5 +1,6 @@
 package com.friendprojects.chessapp.ai;
 
+import com.friendprojects.chessapp.ai.eval.Node;
 import com.friendprojects.chessapp.enums.Colour;
 import com.friendprojects.chessapp.model.Board;
 import com.friendprojects.chessapp.model.Move;

@@ -3,12 +3,15 @@ package com.friendprojects.chessapp.model;
 import com.friendprojects.chessapp.enums.Colour;
 import com.friendprojects.chessapp.enums.PieceType;
 
+import javax.swing.*;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> chessBoard;
+    private final EnumMap<PieceType, Integer> pieceCount;
 
     private Piece enPassantCapture = null;
     private Piece whiteKing;
@@ -16,12 +19,15 @@ public class Board {
 
     public Board() {
         this.chessBoard = new HashMap<>();
+        this.pieceCount = new EnumMap<>(PieceType.class);
     }
 
     public Board(Board copy) {
         this.chessBoard = new HashMap<>();
+        this.pieceCount = new EnumMap<>(PieceType.class);
         for (Map.Entry<Position, Piece> entry : copy.chessBoard.entrySet()) {
             this.chessBoard.put(entry.getKey(), new Piece(entry.getValue()));
+            this.pieceCount.merge(entry.getValue().getType(), 1, Integer::sum);
         }
         this.enPassantCapture = copy.enPassantCapture == null ? null : new Piece(copy.enPassantCapture);
         this.whiteKing = new Piece(copy.whiteKing);
@@ -96,10 +102,20 @@ public class Board {
 
     public void addPieceAt(Position position, Piece piece) {
         this.chessBoard.put(position, piece);
+        this.pieceCount.merge(piece.getType(), 1, Integer::sum);
     }
 
     public void removePieceAt(Position position) {
+        Piece piece = getPieceAt(position);
         this.chessBoard.remove(position);
+        this.pieceCount.merge(piece.getType(), -1, (current, decrement) -> {
+            int next = current - decrement;
+            return next > 0 ? next : null;
+        });
+    }
+
+    public int getPieceCount(PieceType type) {
+        return this.pieceCount.get(type);
     }
 
     public boolean isOccupied(Position position) {

@@ -1,4 +1,4 @@
-package com.friendprojects.chessapp.ai;
+package com.friendprojects.chessapp.ai.eval;
 
 import com.friendprojects.chessapp.enums.Colour;
 import com.friendprojects.chessapp.enums.PieceType;
@@ -93,10 +93,15 @@ public class PieceSquareTables {
             case BISHOP -> PST = BISHOP;
             case ROOK -> PST = ROOK;
             case QUEEN -> PST = QUEEN;
-            case KING -> PST = KING;
             default -> throw new IllegalArgumentException("[PST] Unknown piece type given: " + type);
         }
         return PST[coordToSquareIndex(position, colour)];
+    }
+
+    public static int getPSTSquare(PieceType type, Position position, Colour colour, int phase) {
+        int initial = KING[coordToSquareIndex(position, colour)];
+        int end = KING_ENDGAME[coordToSquareIndex(position, colour)];
+        return (initial * phase + end * (Evaluator.PHASE_TOTAL - phase)) / Evaluator.PHASE_TOTAL;
     }
 
     private static int coordToSquareIndex(Position position, Colour colour) {

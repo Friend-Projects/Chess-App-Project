@@ -1,4 +1,4 @@
-package com.friendprojects.chessapp.ai;
+package com.friendprojects.chessapp.ai.eval;
 
 import com.friendprojects.chessapp.enums.Colour;
 import com.friendprojects.chessapp.model.Board;

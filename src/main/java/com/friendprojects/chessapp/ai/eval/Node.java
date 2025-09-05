@@ -1,4 +1,4 @@
-package com.friendprojects.chessapp.ai;
+package com.friendprojects.chessapp.ai.eval;
 
 public class Node<T> {
 
