@@ -3,11 +3,26 @@ package com.friendprojects.chessapp.ai.eval;
 import com.friendprojects.chessapp.enums.Colour;
 import com.friendprojects.chessapp.enums.PieceType;
 import com.friendprojects.chessapp.model.Board;
+import com.friendprojects.chessapp.model.Move;
 import com.friendprojects.chessapp.model.Piece;
+import com.friendprojects.chessapp.model.Position;
+
+import java.util.*;
+
+import static com.friendprojects.chessapp.rules.Rules.MOVE_VALIDATOR;
 
 public class Evaluator {
 
     public static final int PHASE_TOTAL = 24;
+    private static final EnumMap<PieceType, Integer> ATTACK_VALUES = new EnumMap<>(PieceType.class);
+    private static final int[] ATTACKER_WEIGHTS = {0, 50, 75, 88, 94, 97, 99};
+
+    static {
+        ATTACK_VALUES.put(PieceType.KNIGHT, 20);
+        ATTACK_VALUES.put(PieceType.BISHOP, 20);
+        ATTACK_VALUES.put(PieceType.ROOK, 40);
+        ATTACK_VALUES.put(PieceType.QUEEN, 80);
+    }
 
     public static int material(Board board) {
         int value = 0;
@@ -19,7 +34,7 @@ public class Evaluator {
     }
 
     public static int position(Board board) {
-        // Piece-Square Tables (Simplified Evaluation Function), King Safety, Mobility
+        // Piece-Square Tables (Simplified Evaluation Function)
         int value = 0;
         for (Piece piece : board.getChessBoard().values()) {
             if (piece.getType() == PieceType.KING) {
@@ -28,6 +43,16 @@ public class Evaluator {
                 value += PieceSquareTables.getPSTSquare(piece.getType(), piece.getPosition(), piece.getColour());
             }
         }
+
+        // King Safety (Pawn Shield and Attacking King Zone)
+        for (Colour colour : Colour.values()) {
+            int sign = colour == Colour.WHITE ? 1 : -1;
+            value += sign * pawnShield(colour, board);
+            value += sign * attackingKingZone(colour, board);
+        }
+
+        // Mobility
+
         return value / 100;
     }
 
@@ -38,5 +63,61 @@ public class Evaluator {
     private static int computePhase(Board board) {
         // Pawn = 0, Knight = 1, Bishop = 1, Rook = 2, Queen = 4, King = 0
         return board.getPieceCount(PieceType.KNIGHT) + board.getPieceCount(PieceType.BISHOP) + board.getPieceCount(PieceType.ROOK) * 2 + board.getPieceCount(PieceType.QUEEN) * 4;
+    }
+
+    private static int pawnShield(Colour colour, Board board) {
+        int value = 0;
+        Piece king = board.getKing(colour);
+        int forward = colour == Colour.WHITE ? 1 : -1;
+
+        for (int colOffset = -1; colOffset < 2; colOffset++) {
+            int pawnCol = king.getPosition().getCol() + colOffset;
+            if (pawnCol < 0 || pawnCol > 7) continue;
+
+            Piece forwardPiece = board.getPieceAt(new Position(pawnCol, king.getPosition().getRow() + forward));
+            if (forwardPiece != null && forwardPiece.getType() == PieceType.PAWN && forwardPiece.getColour() == colour) {
+                value += 20;
+            } else {
+                value -= 15;
+            }
+        }
+        return value;
+    }
+
+    private static int attackingKingZone(Colour colour, Board board) {
+        Piece king = board.getKing(colour);
+        Set<Position> kingZone = getKingZone(king);
+        Set<Piece> attackingPieces = new HashSet<>();
+        int attackingValue = 0;
+
+        for (Map.Entry<Position, Piece> entry : board.getChessBoard().entrySet()) {
+            if (entry.getValue().getColour() == colour) {
+                List<Position> attackingSquares = MOVE_VALIDATOR.getValidMoves(entry.getValue(), board).stream().map(Move::getTarget).toList();
+
+                for (Position square : attackingSquares) {
+                    if (kingZone.contains(square)) {
+                        attackingPieces.add(entry.getValue());
+                        attackingValue += ATTACK_VALUES.get(entry.getValue().getType());
+                    }
+                }
+            }
+        }
+        return attackingValue * ATTACKER_WEIGHTS[Math.min(attackingPieces.size() - 1, 6)] / 100;
+    }
+
+    private static Set<Position> getKingZone(Piece king) {
+        Set<Position> kingZone = new HashSet<>();
+        int[] forward = king.getColour() == Colour.WHITE ? new int[]{-1, 2} : new int[]{-2, 1};
+
+        // King zone consists of the king's position, king's attacking positions, and another row forward
+        for (int i = -1; i <= 1; i++) {
+            for (int j = forward[0]; j <= forward[1]; j++) {
+                Position square = king.getPosition().offset(i, j);
+                if (square != null) {
+                    kingZone.add(square);
+                }
+            }
+        }
+        return kingZone;
     }
 }
