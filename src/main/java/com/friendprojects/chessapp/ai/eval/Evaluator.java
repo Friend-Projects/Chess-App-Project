@@ -34,8 +34,8 @@ public class Evaluator {
     }
 
     public static int position(Board board) {
-        // Piece-Square Tables (Simplified Evaluation Function)
         int value = 0;
+        // Piece-Square Tables (Simplified Evaluation Function)
         for (Piece piece : board.getChessBoard().values()) {
             if (piece.getType() == PieceType.KING) {
                 value += PieceSquareTables.getPSTSquare(piece.getType(), piece.getPosition(), piece.getColour(), computePhase(board));
@@ -44,15 +44,13 @@ public class Evaluator {
             }
         }
 
-        // King Safety (Pawn Shield and Attacking King Zone)
+        // King Safety (Pawn Shield and Attacking King Zone) & Mobility (Count Valid Moves Per Piece and Scale via Piece Type in Centipawns)
         for (Colour colour : Colour.values()) {
             int sign = colour == Colour.WHITE ? 1 : -1;
             value += sign * pawnShield(colour, board);
             value += sign * attackingKingZone(colour, board);
+            value += sign * pieceMobility(colour, board);
         }
-
-        // Mobility
-
         return value / 100;
     }
 
@@ -90,14 +88,14 @@ public class Evaluator {
         Set<Piece> attackingPieces = new HashSet<>();
         int attackingValue = 0;
 
-        for (Map.Entry<Position, Piece> entry : board.getChessBoard().entrySet()) {
-            if (entry.getValue().getColour() == colour) {
-                List<Position> attackingSquares = MOVE_VALIDATOR.getValidMoves(entry.getValue(), board).stream().map(Move::getTarget).toList();
+        for (Piece piece : board.getChessBoard().values()) {
+            if (piece.getColour() == colour) {
+                List<Position> attackingSquares = MOVE_VALIDATOR.getValidMoves(piece, board).stream().map(Move::getTarget).toList();
 
                 for (Position square : attackingSquares) {
                     if (kingZone.contains(square)) {
-                        attackingPieces.add(entry.getValue());
-                        attackingValue += ATTACK_VALUES.get(entry.getValue().getType());
+                        attackingPieces.add(piece);
+                        attackingValue += ATTACK_VALUES.get(piece.getType());
                     }
                 }
             }
@@ -119,5 +117,22 @@ public class Evaluator {
             }
         }
         return kingZone;
+    }
+
+    private static int pieceMobility(Colour colour, Board board) {
+        int mobility = 0;
+        for (Piece piece : board.getChessBoard().values()) {
+            if (piece.getColour() == colour) {
+                int movesCount = MOVE_VALIDATOR.getValidMoves(piece, board).size();
+                switch (piece.getType()) {
+                    case KNIGHT -> mobility += movesCount * 4;
+                    case BISHOP -> mobility += movesCount * 3;
+                    case ROOK -> mobility += movesCount * 2;
+                    case QUEEN -> mobility += movesCount;
+                }
+            }
+        }
+        double phase = (double) computePhase(board) / PHASE_TOTAL;
+        return (int) phase * mobility;
     }
 }
