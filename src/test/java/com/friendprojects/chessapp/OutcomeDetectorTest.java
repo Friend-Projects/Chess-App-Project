@@ -1,4 +1,4 @@
 package com.friendprojects.chessapp;
 
-public class OutcomeDetectorTest {
+public class OutcomeDetectorTest extends BaseTest {
 }

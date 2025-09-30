@@ -5,5 +5,5 @@ import com.friendprojects.chessapp.model.Board;
 import com.friendprojects.chessapp.model.Move;
 
 public interface AIStrategy {
-    Move chooseMove(Board board, Colour colour);
+    Move chooseMove(Colour colour, Board board);
 }
