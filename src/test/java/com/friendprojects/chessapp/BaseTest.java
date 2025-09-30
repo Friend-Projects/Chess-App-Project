@@ -1,5 +1,5 @@
 package com.friendprojects.chessapp;
 
-public class BaseTest {
+public abstract class BaseTest {
     // Setup dummy chess boards for testing
 }

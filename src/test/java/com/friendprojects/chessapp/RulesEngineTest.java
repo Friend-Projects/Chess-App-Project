@@ -1,4 +1,4 @@
 package com.friendprojects.chessapp;
 
-public class RulesEngineTest {
+public class RulesEngineTest extends BaseTest {
 }

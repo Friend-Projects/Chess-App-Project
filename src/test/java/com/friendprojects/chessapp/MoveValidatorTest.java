@@ -1,4 +1,4 @@
 package com.friendprojects.chessapp;
 
-public class MoveValidatorTest {
+public class MoveValidatorTest extends BaseTest {
 }
