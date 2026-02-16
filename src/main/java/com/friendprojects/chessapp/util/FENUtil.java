@@ -1,6 +1,7 @@
 package com.friendprojects.chessapp.util;
 
 import com.friendprojects.chessapp.enums.Colour;
+import com.friendprojects.chessapp.enums.Display;
 import com.friendprojects.chessapp.model.Board;
 import com.friendprojects.chessapp.model.Game;
 import com.friendprojects.chessapp.model.Piece;
@@ -28,27 +29,7 @@ public class FENUtil {
         StringBuilder sb = new StringBuilder();
         Board board = game.getBoard();
 
-        for (int i = 7; i >= 0; i--) {
-            int numEmpty = 0;
-            for (int j = 0; j <= 7; j++) {
-                Position position = new Position(i, j);
-                Piece piece = board.getPieceAt(position);
-                if (piece == null) {
-                    numEmpty++;
-                } else {
-                    if (numEmpty > 0) {
-                        sb.append(numEmpty);
-                        numEmpty = 0;
-                    }
-                    sb.append(piece.toFENChar());
-                }
-            }
-            if (numEmpty > 0) {
-                sb.append(numEmpty);
-            }
-            sb.append('/');
-        }
-
+        sb.append(board.display(Display.FEN));
         sb.append(' ').append(game.getCurrentTurn().getColor() == Colour.WHITE ? 'w' : 'b');
         sb.append(' ').append(getCastlingInfo(board));
         sb.append(' ').append(getEnpassantInfo(board));

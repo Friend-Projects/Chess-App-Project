@@ -2,6 +2,7 @@ package com.friendprojects.chessapp;
 
 import com.friendprojects.chessapp.enums.AIDifficulty;
 import com.friendprojects.chessapp.enums.Colour;
+import com.friendprojects.chessapp.enums.Display;
 import com.friendprojects.chessapp.enums.PieceType;
 import com.friendprojects.chessapp.model.*;
 import javafx.application.Application;
@@ -27,6 +28,7 @@ public class Main extends Application {
         GameSetting gs = new GameSetting(false, tc, AIDifficulty.EASY);
         Board board = new Board();
         board.setupBoard();
+        System.out.println(board.display(Display.CLI));
         System.out.println(pos.equals(pos2) + " ----- " + pos);
         System.out.println(piece);
         System.out.println(move);

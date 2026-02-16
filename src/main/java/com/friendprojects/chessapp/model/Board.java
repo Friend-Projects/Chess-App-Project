@@ -1,6 +1,7 @@
 package com.friendprojects.chessapp.model;
 
 import com.friendprojects.chessapp.enums.Colour;
+import com.friendprojects.chessapp.enums.Display;
 import com.friendprojects.chessapp.enums.PieceType;
 
 import java.util.Collections;
@@ -132,28 +133,28 @@ public class Board {
         return false;
     }
 
-    public String getCLIDisplay() {
+    public String display(Display mode) {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 7; i >= 0; i--) {
             int numEmpty = 0;
             for (int j = 0; j <= 7; j++) {
-                Position position = new Position(i, j);
+                Position position = new Position(j, i);
                 Piece piece = this.getPieceAt(position);
                 if (piece == null) {
                     numEmpty++;
                 } else {
                     if (numEmpty > 0) {
-                        sb.append(numEmpty);
+                        sb.append(mode == Display.CLI ? " ".repeat(numEmpty) : numEmpty);
                         numEmpty = 0;
                     }
-                    sb.append(pieceToFENChar(piece));
+                    sb.append(piece.toFENChar());
                 }
             }
             if (numEmpty > 0) {
-                sb.append(numEmpty);
+                sb.append(mode == Display.CLI ? " ".repeat(numEmpty) : numEmpty);
             }
-            sb.append('/');
+            sb.append(mode == Display.CLI ? '\n' : '/');
         }
 
         return sb.toString();
