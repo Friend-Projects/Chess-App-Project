@@ -56,6 +56,25 @@ public class Piece {
         this.isUnmoved = false;
     }
 
+    /**
+     * Convert the chess piece instance to their respective FEN character.
+     *
+     * @return the FEN {@code String} of the piece
+     */
+    public char toFENChar() {
+        char fenChar;
+        switch (this.getType()) {
+            case PAWN -> fenChar = 'p';
+            case KNIGHT -> fenChar = 'n';
+            case BISHOP -> fenChar = 'b';
+            case ROOK -> fenChar = 'r';
+            case QUEEN -> fenChar = 'q';
+            case KING -> fenChar = 'k';
+            default -> throw new IllegalArgumentException("[Piece type not found] " + this.getType());
+        }
+        return this.getColour() == Colour.WHITE ? Character.toUpperCase(fenChar) : fenChar;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

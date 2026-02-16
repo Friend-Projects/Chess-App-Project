@@ -40,7 +40,7 @@ public class FENUtil {
                         sb.append(numEmpty);
                         numEmpty = 0;
                     }
-                    sb.append(pieceToFENChar(piece));
+                    sb.append(piece.toFENChar());
                 }
             }
             if (numEmpty > 0) {
@@ -53,26 +53,6 @@ public class FENUtil {
         sb.append(' ').append(getCastlingInfo(board));
         sb.append(' ').append(getEnpassantInfo(board));
         return sb.toString();
-    }
-
-    /**
-     * Convert chess piece types to their respective FEN character.
-     *
-     * @param piece the piece to be converted
-     * @return the FEN {@code String} of the piece
-     */
-    private static char pieceToFENChar(Piece piece) {
-        char fenChar;
-        switch (piece.getType()) {
-            case PAWN -> fenChar = 'p';
-            case KNIGHT -> fenChar = 'n';
-            case BISHOP -> fenChar = 'b';
-            case ROOK -> fenChar = 'r';
-            case QUEEN -> fenChar = 'q';
-            case KING -> fenChar = 'k';
-            default -> throw new IllegalArgumentException("[Piece type not found] " + piece.getType());
-        }
-        return piece.getColour() == Colour.WHITE ? Character.toUpperCase(fenChar) : fenChar;
     }
 
     /**

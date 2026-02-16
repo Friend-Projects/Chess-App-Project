@@ -3,7 +3,6 @@ package com.friendprojects.chessapp.model;
 import com.friendprojects.chessapp.enums.Colour;
 import com.friendprojects.chessapp.enums.PieceType;
 
-import javax.swing.*;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -55,6 +54,8 @@ public class Board {
                 blackKing = blackPiece;
             }
         }
+        this.enPassantCapture = null;
+        pieceCount.clear();
     }
 
     /**
@@ -71,12 +72,13 @@ public class Board {
         if (!chessBoard.containsKey(origin)) {
             throw new IllegalArgumentException("No " + pieceToMove.getType() + " at position " + origin.toAlgebraic());
         }
-        if (pieceToMove.getType() != pieceAtOrigin.getType()) {
+        if (!pieceToMove.equals(pieceAtOrigin)) {
             throw new IllegalArgumentException("Piece " + pieceAtOrigin.getType() + " instead of " + pieceToMove.getType() + " found");
         }
 
         removePieceAt(origin);
-        pieceAtOrigin.setPosition(target);
+        pieceToMove.setPosition(target);
+        pieceToMove.setToMoved();
         addPieceAt(target, pieceToMove);
     }
 
@@ -101,6 +103,7 @@ public class Board {
     }
 
     public void addPieceAt(Position position, Piece piece) {
+        if (piece.getPosition() == null) piece.setPosition(position);
         this.chessBoard.put(position, piece);
         this.pieceCount.merge(piece.getType(), 1, Integer::sum);
     }
@@ -127,6 +130,33 @@ public class Board {
             return getPieceAt(position).getColour() == colour;
         }
         return false;
+    }
+
+    public String getCLIDisplay() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 7; i >= 0; i--) {
+            int numEmpty = 0;
+            for (int j = 0; j <= 7; j++) {
+                Position position = new Position(i, j);
+                Piece piece = this.getPieceAt(position);
+                if (piece == null) {
+                    numEmpty++;
+                } else {
+                    if (numEmpty > 0) {
+                        sb.append(numEmpty);
+                        numEmpty = 0;
+                    }
+                    sb.append(pieceToFENChar(piece));
+                }
+            }
+            if (numEmpty > 0) {
+                sb.append(numEmpty);
+            }
+            sb.append('/');
+        }
+
+        return sb.toString();
     }
 
     @Override
