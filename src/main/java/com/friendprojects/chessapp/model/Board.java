@@ -41,10 +41,8 @@ public class Board {
         this.chessBoard.clear();
         PieceType[] backRankOrder = {PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN, PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK};
         for (int col = 0; col < 8; col++) {
-            Position whitePawnPos = new Position(col, 1);
-            Position blackPawnPos = new Position(col, 6);
-            chessBoard.put(whitePawnPos, new Piece(PieceType.PAWN, Colour.WHITE, whitePawnPos));
-            chessBoard.put(blackPawnPos, new Piece(PieceType.PAWN, Colour.BLACK, blackPawnPos));
+            this.addPieceAt(new Position(col, 1), new Piece(PieceType.PAWN, Colour.WHITE));
+            this.addPieceAt(new Position(col, 6), new Piece(PieceType.PAWN, Colour.BLACK));
 
             Piece whitePiece = new Piece(backRankOrder[col], Colour.WHITE, new Position(col, 0));
             Piece blackPiece = new Piece(backRankOrder[col], Colour.BLACK, new Position(col, 7));

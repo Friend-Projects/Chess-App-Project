@@ -16,6 +16,12 @@ public class Piece {
         this.position = null;
     }
 
+    public Piece(PieceType pieceType, Colour colour, boolean isUnmoved) {
+        this.pieceType = pieceType;
+        this.colour = colour;
+        this.isUnmoved = isUnmoved;
+    }
+
     public Piece(PieceType pieceType, Colour colour, Position position) {
         this.pieceType = pieceType;
         this.colour = colour;
@@ -26,6 +32,7 @@ public class Piece {
         this.pieceType = copy.pieceType;
         this.colour = copy.colour;
         this.position = copy.position;
+        this.isUnmoved = copy.isUnmoved;
     }
 
     public Position getPosition() {
