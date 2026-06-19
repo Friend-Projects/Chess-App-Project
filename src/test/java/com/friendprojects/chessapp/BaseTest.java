@@ -262,11 +262,11 @@ public abstract class BaseTest {
         board.setupBoard();
 
         // First five half-moves of an Italian game
-        board.executeMove(new Move(board.getPieceAt(new Position(4, 1)), new Position(4, 1), new Position(4, 3)));
-        board.executeMove(new Move(board.getPieceAt(new Position(4, 6)), new Position(4, 6), new Position(4, 4)));
-        board.executeMove(new Move(board.getPieceAt(new Position(6, 0)), new Position(6, 0), new Position(5, 2)));
-        board.executeMove(new Move(board.getPieceAt(new Position(6, 7)), new Position(6, 7), new Position(2, 5)));
-        board.executeMove(new Move(board.getPieceAt(new Position(5, 7)), new Position(5, 7), new Position(2, 3)));
+        board.executeMove(new Move(board.getPieceAt(4, 1), new Position(4, 1), new Position(4, 3)));
+        board.executeMove(new Move(board.getPieceAt(4, 6), new Position(4, 6), new Position(4, 4)));
+        board.executeMove(new Move(board.getPieceAt(6, 0), new Position(6, 0), new Position(5, 2)));
+        board.executeMove(new Move(board.getPieceAt(6, 7), new Position(6, 7), new Position(2, 5)));
+        board.executeMove(new Move(board.getPieceAt(5, 7), new Position(5, 7), new Position(2, 3)));
 
         BOARDS.put("Italian_Opening", board);
     }
@@ -277,12 +277,12 @@ public abstract class BaseTest {
         board.setupBoard();
 
         // First six half-moves of the London System
-        board.executeMove(new Move(board.getPieceAt(new Position(3, 1)), new Position(3, 1), new Position(3, 3)));
-        board.executeMove(new Move(board.getPieceAt(new Position(3, 6)), new Position(3, 6), new Position(3, 4)));
-        board.executeMove(new Move(board.getPieceAt(new Position(6, 0)), new Position(6, 0), new Position(5, 2)));
-        board.executeMove(new Move(board.getPieceAt(new Position(6, 7)), new Position(6, 7), new Position(5, 5)));
-        board.executeMove(new Move(board.getPieceAt(new Position(2, 0)), new Position(2, 0), new Position(5, 3)));
-        board.executeMove(new Move(board.getPieceAt(new Position(2, 6)), new Position(2, 6), new Position(2, 4)));
+        board.executeMove(new Move(board.getPieceAt(3, 1), new Position(3, 1), new Position(3, 3)));
+        board.executeMove(new Move(board.getPieceAt(3, 6), new Position(3, 6), new Position(3, 4)));
+        board.executeMove(new Move(board.getPieceAt(6, 0), new Position(6, 0), new Position(5, 2)));
+        board.executeMove(new Move(board.getPieceAt(6, 7), new Position(6, 7), new Position(5, 5)));
+        board.executeMove(new Move(board.getPieceAt(2, 0), new Position(2, 0), new Position(5, 3)));
+        board.executeMove(new Move(board.getPieceAt(2, 6), new Position(2, 6), new Position(2, 4)));
 
         BOARDS.put("London_Opening", board);
     }
@@ -293,12 +293,12 @@ public abstract class BaseTest {
         board.setupBoard();
 
         // First six half-moves of the Ruy Lopez Classical Defense
-        board.executeMove(new Move(board.getPieceAt(new Position(4, 1)), new Position(4, 1), new Position(4, 3)));
-        board.executeMove(new Move(board.getPieceAt(new Position(4, 6)), new Position(4, 6), new Position(4, 4)));
-        board.executeMove(new Move(board.getPieceAt(new Position(6, 0)), new Position(6, 0), new Position(5, 2)));
-        board.executeMove(new Move(board.getPieceAt(new Position(1, 7)), new Position(1, 7), new Position(2, 5)));
-        board.executeMove(new Move(board.getPieceAt(new Position(5, 0)), new Position(5, 0), new Position(1, 4)));
-        board.executeMove(new Move(board.getPieceAt(new Position(5, 7)), new Position(5, 7), new Position(2, 4)));
+        board.executeMove(new Move(board.getPieceAt(4, 1), new Position(4, 1), new Position(4, 3)));
+        board.executeMove(new Move(board.getPieceAt(4, 6), new Position(4, 6), new Position(4, 4)));
+        board.executeMove(new Move(board.getPieceAt(6, 0), new Position(6, 0), new Position(5, 2)));
+        board.executeMove(new Move(board.getPieceAt(1, 7), new Position(1, 7), new Position(2, 5)));
+        board.executeMove(new Move(board.getPieceAt(5, 0), new Position(5, 0), new Position(1, 4)));
+        board.executeMove(new Move(board.getPieceAt(5, 7), new Position(5, 7), new Position(2, 4)));
 
         BOARDS.put("Ruy_Lopez_Classical_Defense", board);
     }
@@ -309,16 +309,16 @@ public abstract class BaseTest {
         board.setupBoard();
 
         // First ten half-moves of the Sicilian Defense Najdorf Variation
-        board.executeMove(new Move(board.getPieceAt(new Position(4, 1)), new Position(4, 1), new Position(4, 3)));
-        board.executeMove(new Move(board.getPieceAt(new Position(2, 6)), new Position(2, 6), new Position(2, 4)));
-        board.executeMove(new Move(board.getPieceAt(new Position(6, 0)), new Position(6, 0), new Position(5, 2)));
-        board.executeMove(new Move(board.getPieceAt(new Position(3, 6)), new Position(3, 6), new Position(3, 5)));
-        board.executeMove(new Move(board.getPieceAt(new Position(3, 1)), new Position(3, 1), new Position(3, 3)));
-        board.executeMove(new Move(board.getPieceAt(new Position(2, 4)), new Position(2, 4), new Position(3, 3), board.getPieceAt(new Position(3, 3))));
-        board.executeMove(new Move(board.getPieceAt(new Position(5, 2)), new Position(5, 2), new Position(3, 3), board.getPieceAt(new Position(3, 3))));
-        board.executeMove(new Move(board.getPieceAt(new Position(6, 7)), new Position(6, 7), new Position(5, 5)));
-        board.executeMove(new Move(board.getPieceAt(new Position(1, 0)), new Position(1, 0), new Position(2, 2)));
-        board.executeMove(new Move(board.getPieceAt(new Position(0, 6)), new Position(0, 6), new Position(0, 5)));
+        board.executeMove(new Move(board.getPieceAt(4, 1), new Position(4, 1), new Position(4, 3)));
+        board.executeMove(new Move(board.getPieceAt(2, 6), new Position(2, 6), new Position(2, 4)));
+        board.executeMove(new Move(board.getPieceAt(6, 0), new Position(6, 0), new Position(5, 2)));
+        board.executeMove(new Move(board.getPieceAt(3, 6), new Position(3, 6), new Position(3, 5)));
+        board.executeMove(new Move(board.getPieceAt(3, 1), new Position(3, 1), new Position(3, 3)));
+        board.executeMove(new Move(board.getPieceAt(2, 4), new Position(2, 4), new Position(3, 3), board.getPieceAt(3, 3)));
+        board.executeMove(new Move(board.getPieceAt(5, 2), new Position(5, 2), new Position(3, 3), board.getPieceAt(3, 3)));
+        board.executeMove(new Move(board.getPieceAt(6, 7), new Position(6, 7), new Position(5, 5)));
+        board.executeMove(new Move(board.getPieceAt(1, 0), new Position(1, 0), new Position(2, 2)));
+        board.executeMove(new Move(board.getPieceAt(0, 6), new Position(0, 6), new Position(0, 5)));
 
         BOARDS.put("Sicilian_Najdorf_Variation", board);
     }

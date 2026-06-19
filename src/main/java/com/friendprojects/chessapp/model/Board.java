@@ -101,6 +101,14 @@ public class Board {
         return this.chessBoard.get(position);
     }
 
+    public Piece getPieceAt(int col, int row) {
+        return this.chessBoard.get(new Position(col, row));
+    }
+
+    public Piece getPieceAt(String square) {
+        return this.chessBoard.get(Position.toCoords(square));
+    }
+
     public void addPieceAt(Position position, Piece piece) {
         if (piece.getPosition() == null) piece.setPosition(position);
         this.chessBoard.put(position, piece);

@@ -85,7 +85,7 @@ public class MoveValidator {
             Position capturePos = enPassantCapture.getPosition();
             int colDiff = Math.abs(capturePos.getCol() - origin.getCol());
             if (capturePos.getRow() == origin.getRow() && colDiff == 1) {
-                Position enPassantDiagonal = capturePos.offset(capturePos.getCol(), origin.getRow() + yOffset);
+                Position enPassantDiagonal = capturePos.offset(0, yOffset);
                 moves.add(new Move(piece, origin, enPassantDiagonal, enPassantCapture));
             }
         }
@@ -162,7 +162,7 @@ public class MoveValidator {
         if (piece.isUnmoved()) {
             int[] rooksOffset = new int[]{-4, 3};
             Piece queenSideRook = board.getPieceAt(origin.offset(rooksOffset[0], 0));
-            if (queenSideRook.isUnmoved() && !board.isOccupied(origin.offset(-3, 0)) && !board.isOccupied(origin.offset(-2, 0)) && !board.isOccupied(origin.offset(-1, 0))) {
+            if (queenSideRook != null && queenSideRook.isUnmoved() && !board.isOccupied(origin.offset(-3, 0)) && !board.isOccupied(origin.offset(-2, 0)) && !board.isOccupied(origin.offset(-1, 0))) {
                 Position kingCastle = origin.offset(-2, 0);
                 Position rookCastle = origin.offset(-1, 0);
                 Move rookCastling = new Move(queenSideRook, queenSideRook.getPosition(), rookCastle);
@@ -170,7 +170,7 @@ public class MoveValidator {
             }
 
             Piece kingSideRook = board.getPieceAt(origin.offset(rooksOffset[1], 0));
-            if (kingSideRook.isUnmoved() && !board.isOccupied(origin.offset(1, 0)) && !board.isOccupied(origin.offset(2, 0))) {
+            if (kingSideRook != null && kingSideRook.isUnmoved() && !board.isOccupied(origin.offset(1, 0)) && !board.isOccupied(origin.offset(2, 0))) {
                 Position kingCastle = origin.offset(2, 0);
                 Position rookCastle = origin.offset(1, 0);
                 Move rookCastling = new Move(kingSideRook, kingSideRook.getPosition(), rookCastle);

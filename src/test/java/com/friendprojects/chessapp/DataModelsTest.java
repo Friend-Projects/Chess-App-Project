@@ -104,11 +104,11 @@ public class DataModelsTest {
         public void testMoveExecution() {
             Board board = new Board();
             board.setupBoard();
-            Piece piece = board.getPieceAt(new Position(1, 1));
+            Piece piece = board.getPieceAt(1, 1);
             Move move = new Move(piece, new Position(1, 1), new Position(1, 3));
             board.executeMove(move);
-            assertNull(board.getPieceAt(new Position(1, 1)));
-            assertEquals(piece, board.getPieceAt(new Position(1, 3)));
+            assertNull(board.getPieceAt(1, 1));
+            assertEquals(piece, board.getPieceAt(1, 3));
         }
     }
 

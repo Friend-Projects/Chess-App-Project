@@ -72,7 +72,7 @@ public class Evaluator {
             int pawnCol = king.getPosition().getCol() + colOffset;
             if (pawnCol < 0 || pawnCol > 7) continue;
 
-            Piece forwardPiece = board.getPieceAt(new Position(pawnCol, king.getPosition().getRow() + forward));
+            Piece forwardPiece = board.getPieceAt(pawnCol, king.getPosition().getRow() + forward);
             if (forwardPiece != null && forwardPiece.getType() == PieceType.PAWN && forwardPiece.getColour() == colour) {
                 value += 20;
             } else {
