@@ -45,8 +45,9 @@ public class RulesEngine {
         List<Move> validMoves = moveValidator.getValidMoves(piece, board);
         for (Move validMove : validMoves) {
             Board dummyBoard = new Board(board);
-            dummyBoard.executeMove(validMove);
-            if (isKingInCheck(piece.getColour(), dummyBoard)) {
+            Move dummyMove = validMove.copyForBoard(dummyBoard);
+            dummyBoard.executeMove(dummyMove);
+            if (!isKingInCheck(piece.getColour(), dummyBoard)) {
                 pieceLegalMoves.add(validMove);
             }
         }
@@ -72,7 +73,7 @@ public class RulesEngine {
         for (int[] offset : kOffset) {
             Position check = king.getPosition().offset(offset[0], offset[1]);
             Piece checker = board.getPieceAt(check);
-            if (check != null && checker.getColour() != colour && checker.getType() == PieceType.KNIGHT) {
+            if (checker != null && checker.getColour() != colour && checker.getType() == PieceType.KNIGHT) {
                 return true;
             }
         }
@@ -82,7 +83,7 @@ public class RulesEngine {
             while (check != null) {
                 if (board.isOccupied(check)) {
                     Piece checker = board.getPieceAt(check);
-                    if (checker.getColour() != colour) {
+                    if (checker != null && checker.getColour() != colour) {
                         boolean isDiagonal = Math.abs(offset[0]) - Math.abs(offset[1]) == 0;
                         boolean isStraight = (offset)[0] == 0 || offset[1] == 0;
                         if (isDiagonal && (checker.getType() == PieceType.BISHOP || checker.getType() == PieceType.QUEEN)) {

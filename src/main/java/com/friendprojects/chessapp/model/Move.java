@@ -81,6 +81,17 @@ public class Move {
         return this.castlingRookMove != null;
     }
 
+    public Move copyForBoard(Board board) {
+        return new Move(
+                board.getPieceAt(this.origin),
+                this.origin,
+                this.target,
+                this.capturedPiece,
+                this.promotionType,
+                this.castlingRookMove
+        );
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

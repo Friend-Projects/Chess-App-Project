@@ -25,13 +25,25 @@ public class Board {
     public Board(Board copy) {
         this.chessBoard = new HashMap<>();
         this.pieceCount = new EnumMap<>(PieceType.class);
+        this.whiteKing = null;
+        this.blackKing = null;
+        this.enPassantCapture = null;
         for (Map.Entry<Position, Piece> entry : copy.chessBoard.entrySet()) {
-            this.chessBoard.put(entry.getKey(), new Piece(entry.getValue()));
+            Piece copyPiece = new Piece(entry.getValue());
+            this.chessBoard.put(entry.getKey(), copyPiece);
+
+            if (entry.getValue() == copy.whiteKing) {
+                this.whiteKing = copyPiece;
+            }
+            if (entry.getValue() == copy.blackKing) {
+                this.blackKing = copyPiece;
+            }
+            if (entry.getValue() == copy.enPassantCapture) {
+                this.enPassantCapture = copyPiece;
+            }
+
             this.pieceCount.merge(entry.getValue().getType(), 1, Integer::sum);
         }
-        this.enPassantCapture = copy.enPassantCapture == null ? null : new Piece(copy.enPassantCapture);
-        this.whiteKing = new Piece(copy.whiteKing);
-        this.blackKing = new Piece(copy.blackKing);
     }
 
     /**
@@ -49,8 +61,8 @@ public class Board {
             chessBoard.put(whitePiece.getPosition(), whitePiece);
             chessBoard.put(blackPiece.getPosition(), blackPiece);
             if (backRankOrder[col] == PieceType.KING) {
-                whiteKing = whitePiece;
-                blackKing = blackPiece;
+                this.setKing(whitePiece);
+                this.setKing(blackPiece);
             }
         }
         this.enPassantCapture = null;
@@ -83,6 +95,15 @@ public class Board {
 
     public void setEnPassantCapture(Piece piece) {
         this.enPassantCapture = piece;
+    }
+
+    public void setKing(Piece piece) {
+        if (piece.getColour() == Colour.WHITE && piece.getType() == PieceType.KING) {
+            this.whiteKing = piece;
+        }
+        if (piece.getColour() == Colour.BLACK && piece.getType() == PieceType.KING) {
+            this.blackKing = piece;
+        }
     }
 
     public Piece getEnPassantCapture() {
